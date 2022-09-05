@@ -1,0 +1,199 @@
+-- QUERIES 1
+-- 1) Find out the SELLING COST AVERAGE for the packages developed in PASCAL?
+-- SELECT AVG (SCOST) FROM SOFTWARE WHERE DEV_IN LIKE 'PASCAL';
+SELECT  AVG(S_COST) FROM SOFTWARE 
+WHERE DEV_IN = "JAVA";  -- we will use the LIKE query
+
+-- 2) Display the names and ages of all programmers.
+   
+    SELECT NAME AS NAME ,
+    
+	YEAR(CURDATE())-YEAR(DOB) AS AGE FROM PROGRAMMER;
+    select *from programmer;
+    select *from STUDIES;
+    
+-- 3) Display the names and ages of all the programmers who have undergone training in DSA course
+SELECT NAME AS NAME FROM STUDIES
+WHERE COURSE = "DSA";
+-- 4) What is the highest numbers of copies sold by a package?
+SELECT MAX(SOLD)  FROM SOFTWARE;
+
+-- 5) Display the names and date of birth of all the programmer born in JANUARY.
+SELECT DOB, NAME AS NAME  FROM PROGRAMMER 
+WHERE DOB LIKE  "%-01-%";
+
+-- 6) Display lowest course fee.
+SELECT  MIN(CCOST) FROM STUDIES;
+
+-- 7) How many programmer has done PGDCA course.
+SELECT  COUNT(NAME) COUNT FROM STUDIES
+WHERE COURSE LIKE "ML";
+SELECT *FROM SOFTWARE;
+-- 8) How much revenue has been earned through sales of packages in C.
+SELECT SUM(SOLD*S_COST) EARN FROM SOFTWARE
+WHERE DEV_IN LIKE "PYTHON";
+-- 9) Display the details of software developed by Ramesh?
+SELECT *FROM SOFTWARE 
+WHERE NAME LIKE "BABU";
+
+-- 10) How many programmers studied at SABHARI.
+SELECT COUNT(NAME) COUNT FROM STUDIES
+WHERE SPLACE LIKE "CHENNAI";
+
+
+-- 11) Display the details of PACKAGES whose sales crossed the 20000 mark.
+SELECT *FROM SOFTWARE
+WHERE (SOLD*S_COST) > 25000;
+-- 12) Find out the number of copies which should be sold in order 
+-- to recover the development costof each package.
+ SELECT NAME ,D_COST,S_COST,ROUND (D_COST/S_COST) FROM SOFTWARE WHERE S_COST*SOLD > D_COST; 
+ -- 13) What is the price of the costliest software developed in BASIC?
+ SELECT NAME, MAX(S_COST) FROM SOFTWARE
+ WHERE DEV_IN LIKE "JAVA";
+ -- 14) Display the details of packages for which development cost has been recovered.
+ SELECT *FROM SOFTWARE
+ WHERE (S_COST*D_COST)> D_COST;
+ -- 15) How many packages were developed in dbase?
+ SELECT *FROM SOFTWARE;
+ SELECT COUNT(TITLE) PACKAGE_NAME  FROM SOFTWARE
+ WHERE DEV_IN LIKE "PYTHON";
+
+-- 16) How many programmers studies at paragathi?
+SELECT COUNT(NAME) AS NAME FROM STUDIES
+WHERE SPLACE = "CHENNAI";
+
+-- 17) How many programmers paid 5000 to 10000 for their course?
+SELECT COUNT(NAME) AS NAME FROM STUDIES
+WHERE CCOST>=200 AND CCOST<=600;
+
+-- 18) What is the average course fee?
+SELECT AVG(CCOST) AS COURSE_FEE FROM STUDIES; 
+SELECT *FROM PROGRAMMER;
+-- 19) Display the details of programmers knowing c?
+SELECT *FROM PROGRAMMER
+WHERE PROF1="JAVA" OR PROF2="JAVA";
+
+-- 20) How many programmers know either Cobol or Pascal?
+SELECT COUNT(NAME) FROM PROGRAMMER
+WHERE PROF1 IN ("JAVA","PASCAL") OR PROF2 IN ("PASCAL","JAVA");
+
+-- 21) How many programmers don't know Pascal & C?
+SELECT COUNT(NAME) FROM PROGRAMMER
+WHERE PROF1 NOT IN ("JAVA","PASCAL") OR PROF2 IN ("PASCAL","JAVA");
+
+-- 22) How old is the oldest male programmers?
+SELECT NAME,MAX(YEAR(CURDATE())-YEAR(DOB)) FROM PROGRAMMER
+WHERE SEX = "M";
+
+-- 23) What is the average age of female programmers?
+SELECT AVG(YEAR(CURDATE())-YEAR(DOB)) FROM PROGRAMMER
+WHERE SEX = "F";
+
+
+-- 24) Calculate the experience in years for each programmers and display along with the
+-- names in descending order?
+SELECT NAME,YEAR(CURDATE())-YEAR(DOJ) FROM PROGRAMMER
+ORDER BY NAME  DESC;
+
+-- 25) Who are the programmers who celebrate their birthday during the current month?
+SELECT NAME  FROM PROGRAMMER 
+WHERE DOB LIKE "%-08-%";
+
+
+-- 26) How many female programmers are there?
+SELECT COUNT(NAME) F_PROGRAMMER FROM PROGRAMMER
+WHERE SEX LIKE  "F";
+
+
+-- 27) What are the languages known by the male programmers?
+SELECT DISTINCT PROF1 LANGUAGE 
+FROM PROGRAMMER UNION  SELECT DISTINCT PROF2 FROM PROGRAMMER   
+WHERE SEX = "M";
+
+-- 28) What is the Average salary?
+SELECT AVG(SALARY) FROM PROGRAMMER;
+
+
+
+-- 30) Display the details of those who don't know Clipper, Cobol or Pascal?
+SELECT NAME FROM PROGRAMMER
+WHERE PROF2 NOT IN ("JAVA","C","PASCAL") AND PROF2 NOT IN ("JAVA","C","PASCAL");
+
+-- 31) How many Female programmers knowing C are above 24 years of age?
+SELECT NAME FROM PROGRAMMER
+WHERE SEX = "F" AND (PROF1,PROF2) OR (PROF1,PROF2);
+
+-- 32) Who are the programmers who will be celebrating their Birthday within a week?
+SELECT NAME FROM PROGRAMMER 
+WHERE DOB = WEEK(CURDATE());
+
+-- 33) Display the details of those with less than a year's experience?
+SELECT NAME AS EXP FROM PROGRAMMER
+WHERE YEAR(DOJ<1);
+
+-- 34) Display the details of those who will be completing 2 years of service this year?
+SELECT NAME FROM PROGRAMMER
+WHERE YEAR(CURDATE()-YEAR(DOJ))=YEAR(CURDATE());
+SELECT *FROM SOFTWARE;
+
+-- 35) Calculate the amount to be recovered for those packages whose development cost has not been recovered?
+SELECT (D_COST-S_COST*SOLD) AS AMOUNT ,TITLE FROM SOFTWARE 
+WHERE (S_COST*SOLD)<D_COST;
+
+-- 36) List the packages which have not been sold so far?
+SELECT TITLE FROM SOFTWARE 
+WHERE SOLD=0;
+
+-- 37) Find out the cost of the software developed by Mary?
+SELECT NAME,TITLE, S_COST FROM SOFTWARE
+WHERE NAME ="BALAJI";
+
+-- 38) Display the institutes names from the studies table without duplicates?
+SELECT DISTINCT SPLACE FROM STUDIES;
+
+
+-- 39) How many different courses are mentioned in the studies table?
+SELECT DISTINCT COURSE FROM STUDIES;
+
+-- 40) Display the names of the programmers whose names contain 2 occurrences of the letter A?
+SELECT NAME FROM PROGRAMMER
+WHERE NAME LIKE  "%A%A%";
+
+-- 41) Display the names of programmers whose names contain unto 5 characters?
+SELECT NAME FROM PROGRAMMER
+WHERE LENGTH(NAME)<= 5;
+
+-- 42) How many female programmers knowing COBOL have more than 2 years experience?
+SELECT NAME FROM PROGRAMMER 
+WHERE SEX = "F" AND YEAR(CURDATE())-YEAR(DOJ)>2 AND (PROF1="PYTHON") OR (PROF2="PYTHON");
+
+-- 43) What is the length of the shortest name in the programmer table?
+SELECT  MIN(LENGTH(NAME)) FROM PROGRAMMER;
+
+-- 44) What is the average development cost of a package developed in COBOL?
+SELECT AVG(D_COST) FROM SOFTWARE
+WHERE DEV_IN ="JAVA";
+
+-- 45) Display the name, sex, dob (DD/MM/YY format), doj for all the programmers without using 
+-- conversion function?
+SELECT name, sex , SUBSTR(dob,1,2)||'/'||SUBSTR(dob,4,3)||'/'||SUBSTR(dob,8,2) dob, SUBSTR(doj,1,2)||'/'||SUBSTR(doj,4,3)||'/'||SUBSTR(doj,8,2) doj FROM program;
+
+-- 46) Who are the programmers who were born on the last day of the month?
+SELECT NAME FROM PROGRAMMER WHERE LAST_DAY(DOB) = DOB;
+
+-- 47) What is the amount paid in salaries of the male programmers who do not know Cobol?
+SELECT NAME,SALARY FROM PROGRAMMER
+WHERE(PROF1!="JAVA" AND PROF2!="JAVA") AND SEX = "M";
+SELECT *FROM PROGRAMMER;
+
+-- 48) Display the title, scost, dcost and difference between scost and dcost in descending order of  difference?
+SELECT TITLE,S_COST,D_COST,S_COST-D_COST FROM SOFTWARE
+ORDER BY S_COST-D_COST DESC;
+
+-- 49) Display the name, dob, doj of those month of birth and month of joining are same?
+SELECT NAME,DOB,DOJ FROM PROGRAMMER
+WHERE MONTH(DOB)=MONTH(DOJ);
+
+-- 50) Display the names of the packages whose names contain more than 1 word?
+SELECT TITLE FROM SOFTWARE
+WHERE TITLE LIKE "% %";
